@@ -1,889 +1,119 @@
-<html><head>
+<!DOCTYPE html>
+<!-- saved from url=(0019)https://www.azn.az/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)</title>
     <meta name="keywords" content="">
     <meta name="description" content="Azərbaycanda banklarda bu günə olan valyuta məzənnələri">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:url" content="http://www.azn.az/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)">
-    <meta property="og:description" content="Azərbaycanda banklarda bu günə olan valyuta məzənnələri">
-    <meta property="og:image" content="http://www.azn.az/img/logo.png">
-    <link rel="icon" type="image/x-icon" href="img/favicon.png">
-</head>
 
+    <link rel="icon" type="image/x-icon" href="https://www.azn.az/img/favicon.png">
+   <!--  <link rel="stylesheet" href="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/tooltipster-shadow.min.css">
+    <link rel="stylesheet" href="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/tooltipster.bundle.min.css">
+    <link rel="stylesheet" href="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/magnific-popup.css">
+    <link rel="stylesheet" href="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/jquery-ui.min.css">
+    <link rel="stylesheet" href="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/style.css"> -->
+    <script type="text/javascript" async="" src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/js"></script><script async="" src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/analytics.js"></script><script data-ad-client="ca-pub-0767778779176330" async="" src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/adsbygoogle.js"></script>
+    <script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/es5-shims.min.js"></script>
+    <script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/share.js"></script>
+    <script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/jquery.min.js"></script>
+    <script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/jquery-ui.min.js"></script>
+    <script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/tooltipster.bundle.min.js"></script>
+    <script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/stupidtable.min.js"></script>
 <body>
-<script>
-$(document).ready(function() {
 
-    getJsonData();
-    getJsonBestCource();
-
-    $("#banks-1").stupidtable();
-    $("#banks-2").stupidtable();
-    $("#banks-3").stupidtable();
-
-    // Open converter
-    $('body').on('click', '.icon-calculator', function() {
-        $.each($(this).parents(), function() {
-            $(this).parents().find('#tooltip_content').remove();
-        });
-
-        var code = $(this).parent().find(".currency_code").text();
-        var currency = parseFloat($(this).parent().text());
-        $(this).parent().append(
-            '<div id="tooltip_content">' +
-            '<div class="arrow_top"></div>' +
-            '<div class="close icon-font icon-close"></div>' +
-            '<div class="field-with-text">' +
-            '<input type="text" value="100" class="form-input-field cash" maxlength="11" data-cource="' + currency + '"/>' +
-            '<div class="field-with-text__text">' + code + '</div>' +
-            '</div>' +
-            '<span class="currency-converter-tooltip__sign"> = </span>' +
-            '<div class="field-with-text">' +
-            '<input type="text" value="' + (currency * 100).toFixed(2) + '" class="form-input-field currency2" maxlength="11" data-cource="1" />' +
-            '<div class="field-with-text__text">azn</div>' +
-            '</div>' +
-            '</div>'
-        );
-    });
-
-    // Close converter
-    $('body').on('click', '#tooltip_content .close', function() {
-        $.each($(this).parents(), function() {
-            $(this).parents().find('#tooltip_content').remove();
-        });
-    });
-
-    // Calc cource currency 1
-    $("body").on("keyup", "#tooltip_content .cash", function() {
-        var cource1 = parseFloat($("#tooltip_content .cash").data("cource"));
-        var curr1 = parseFloat($("#tooltip_content .cash").val());
-
-        $("#tooltip_content .currency2").val((curr1 * cource1).toFixed(2));
-    });
-
-    // Calc cource currency 2
-    $("body").on("keyup", "#tooltip_content .currency2", function() {
-        var cource1 = parseFloat($("#tooltip_content .cash").data("cource"));
-        var curr2 = parseFloat($("#tooltip_content .currency2").val());
-
-        $("#tooltip_content .cash").val((curr2 / cource1).toFixed(2));
-    });
-
-    // Show calc icon 
-    $("body").on("mouseover", ".banks .calculator__container td", function() {
-        $.each($(this).parents(), function() {
-            $(this).parents().find('.calculator').css({
-                'visibility': 'hidden'
-            });
-        });
-
-        if (($(this).data("cource") == "0.00") || ($(this).data("cource") == "0.0000")) {
-            $(this).find('.calculator').css({
-                'visibility': 'hidden'
-            });
-        } else {
-            $(this).find('.calculator').css({
-                'visibility': 'visible'
-            });
-        }
-
-    });
-
-    // Update data
-    setInterval(function() {
-        getJsonUpdateBestCource();
-        getJsonTime();
-        getJsonUpdateData();
-    }, 300000);
-});
-
-function getJsonData() {
-    $.ajax({
-        url: "/data/data.json",
-        success: function(resp) {
-            var i = 0;
-            while (resp[i]) {
-                if ((resp[i].cash.usd.buy != '0.00') || (resp[i].cash.usd.sell != '0.00') ||
-                    (resp[i].cash.eur.buy != '0.00') || (resp[i].cash.eur.sell != '0.00')) {
-                    $("#banks-1 tbody").append('<tr class="calculator__container exchange-calculator-rates">' +
-                        '<td><a class="gmaps" href="#" data-link="' + resp[i].maplink + '"></a><a class="font-bold" href="' + resp[i].link + '" target="_blank">' + resp[i].name + '</a></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.usd.buy + '">' + resp[i].cash.usd.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.usd.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.usd.sell + '">' + resp[i].cash.usd.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.usd.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.eur.buy + '">' + resp[i].cash.eur.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.eur.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.eur.sell + '">' + resp[i].cash.eur.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.eur.code + '</span></td>' +
-                        '<td></td>' +
-                        '</tr>');
-                }
-                if ((resp[i].cash.rub.buy != '0.00') || (resp[i].cash.rub.sell != '0.00') ||
-                    (resp[i].cash.gbp.buy != '0.00') || (resp[i].cash.gbp.sell != '0.00')) {
-                    $("#banks-2 tbody").append('<tr class="calculator__container exchange-calculator-rates">' +
-                        '<td><a class="gmaps" href="#" data-link="' + resp[i].maplink + '"></a><a class="font-bold" href="' + resp[i].link + '" target="_blank">' + resp[i].name + '</a></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.rub.buy + '">' + resp[i].cash.rub.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.rub.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.rub.sell + '">' + resp[i].cash.rub.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.rub.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.gbp.buy + '">' + resp[i].cash.gbp.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.gbp.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.gbp.sell + '">' + resp[i].cash.gbp.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.gbp.code + '</span></td>' +
-                        '<td></td>' +
-                        '</tr>');
-                }
-                if ((resp[i].cash.try.buy != '0.00') || (resp[i].cash.try.sell != '0.00')) {
-                    $("#banks-3 tbody").append('<tr class="calculator__container exchange-calculator-rates">' +
-                        '<td><a class="gmaps" href="#" data-link="' + resp[i].maplink + '"></a><a class="font-bold" href="' + resp[i].link + '" target="_blank">' + resp[i].name + '</a></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.try.buy + '">' + resp[i].cash.try.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.try.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.try.sell + '">' + resp[i].cash.try.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.try.code + '</span></td>' +
-                        '<td style="width: 30%"></td>' +
-                        '<td></td>' +
-                        '</tr>');
-                }
-                i++;
-                if (i == 33) break;
-            }
-        }
-    });
-}
-
-function getJsonUpdateData() {
-    $.ajax({
-        url: "/data/data.json",
-        success: function(resp) {
-            var i = 0;
-            var htmlData1, htmlData2, htmlData3;
-            while (resp[i]) {
-                if ((resp[i].cash.usd.buy != '0.00') || (resp[i].cash.usd.sell != '0.00') ||
-                    (resp[i].cash.eur.buy != '0.00') || (resp[i].cash.eur.sell != '0.00')) {
-                    htmlData1 += '<tr class="calculator__container exchange-calculator-rates">' +
-                        '<td><a class="gmaps" href="#" data-link="' + resp[i].maplink + '"></a><a class="font-bold" href="' + resp[i].link + '" target="_blank">' + resp[i].name + '</a></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.usd.buy + '">' + resp[i].cash.usd.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.usd.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.usd.sell + '">' + resp[i].cash.usd.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.usd.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.eur.buy + '">' + resp[i].cash.eur.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.eur.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.eur.sell + '">' + resp[i].cash.eur.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.eur.code + '</span></td>' +
-                        '<td></td>' +
-                        '</tr>';
-                }
-                if ((resp[i].cash.rub.buy != '0.00') || (resp[i].cash.rub.sell != '0.00') ||
-                    (resp[i].cash.gbp.buy != '0.00') || (resp[i].cash.gbp.sell != '0.00')) {
-                    htmlData2 += '<tr class="calculator__container exchange-calculator-rates">' +
-                        '<td><a class="gmaps" href="#" data-link="' + resp[i].maplink + '"></a><a class="font-bold" href="' + resp[i].link + '" target="_blank">' + resp[i].name + '</a></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.rub.buy + '">' + resp[i].cash.rub.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.rub.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.rub.sell + '">' + resp[i].cash.rub.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.rub.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.gbp.buy + '">' + resp[i].cash.gbp.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.gbp.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.gbp.sell + '">' + resp[i].cash.gbp.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.gbp.code + '</span></td>' +
-                        '<td></td>' +
-                        '</tr>';
-                }
-                if ((resp[i].cash.try.buy != '0.00') || (resp[i].cash.try.sell != '0.00')) {
-                    htmlData3 += '<tr class="calculator__container exchange-calculator-rates">' +
-                        '<td><a class="gmaps" href="#" data-link="' + resp[i].maplink + '"></a><a class="font-bold" href="' + resp[i].link + '" target="_blank">' + resp[i].name + '</a></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.try.buy + '">' + resp[i].cash.try.buy + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.try.code + '</span></td>' +
-                        '<td class="font-size-large" data-cource="' + resp[i].cash.try.sell + '">' + resp[i].cash.try.sell + '<i class="icon-font icon-calculator calculator"></i><span class="currency_code">' + resp[i].cash.try.code + '</span></td>' +
-                        '<td style="width: 30%"></td>' +
-                        '<td></td>' +
-                        '</tr>';
-                }
-                i++;
-                if (i == 33) break;
-            }
-            $("#banks-1 tbody").replaceWith("<tbody>" + htmlData1 + "</tbody>");
-            $("#banks-2 tbody").replaceWith("<tbody>" + htmlData2 + "</tbody>");
-            $("#banks-3 tbody").replaceWith("<tbody>" + htmlData3 + "</tbody>");
-        }
-    });
-}
-
-function getJsonBestCource() {
-    $.ajax({
-        url: "/data/data.json",
-        success: function(resp) {
-            // CBAR Cource
-            var k = 33;
-            var parrent = $(".currency-table__table tbody");
-            parrent.find("td[data-cource-cbar='usd'] .currency-table__rate__num").text(resp[k].cash.usd.buy);
-            parrent.find("td[data-cource-cbar='eur'] .currency-table__rate__num").text(resp[k].cash.eur.buy);
-            parrent.find("td[data-cource-cbar='rub'] .currency-table__rate__num").text(resp[k].cash.rub.buy);
-            parrent.find("td[data-cource-cbar='gbp'] .currency-table__rate__num").text(resp[k].cash.gbp.buy);
-            parrent.find("td[data-cource-cbar='try'] .currency-table__rate__num").text(resp[k].cash.try.buy);
-
-            var maxUSD, maxEUR, maxRUB, maxGBP, maxTRY;
-            var minUSD, minEUR, minRUB, minGBP, minTRY;
-
-            resp = resp.slice(0, 33);
-
-            $.each(resp, function(i, value) {
-                var usdB = parseFloat(value.cash.usd.buy);
-                var usdS = parseFloat(value.cash.usd.sell);
-                var eurB = parseFloat(value.cash.eur.buy);
-                var eurS = parseFloat(value.cash.eur.sell);
-                var rubB = parseFloat(value.cash.rub.buy);
-                var rubS = parseFloat(value.cash.rub.sell);
-                var gbpB = parseFloat(value.cash.gbp.buy);
-                var gbpS = parseFloat(value.cash.gbp.sell);
-                var tryB = parseFloat(value.cash.try.buy);
-                var tryS = parseFloat(value.cash.try.sell);
-
-                // Best cource buy usd
-                if (usdB > 0) {
-                    if (!maxUSD) { maxUSD = value; } else if (usdB > parseFloat(maxUSD.cash.usd.buy)) {
-                        maxUSD = value;
-                    }
-                }
-                // Best cource sell usd
-                if (usdS > 0) {
-                    if (!minUSD) { minUSD = value; } else if (usdS < parseFloat(minUSD.cash.usd.sell)) {
-                        minUSD = value;
-                    }
-                }
-                // Best cource buy eur
-                if (eurB > 0) {
-                    if (!maxEUR) { maxEUR = value; } else if (eurB > parseFloat(maxEUR.cash.eur.buy)) {
-                        maxEUR = value;
-                    }
-                }
-                // Best cource sell eur
-                if (eurS > 0) {
-                    if (!minEUR) { minEUR = value; } else if (eurS < parseFloat(minEUR.cash.eur.sell)) {
-                        minEUR = value;
-                    }
-                }
-                // Best cource buy rub
-                if (rubB > 0) {
-                    if (!maxRUB) { maxRUB = value; } else if (rubB > parseFloat(maxRUB.cash.rub.buy)) {
-                        maxRUB = value;
-                    }
-                }
-                // Best cource sell rub
-                if (rubS > 0) {
-                    if (!minRUB) { minRUB = value; } else if (rubS < parseFloat(minRUB.cash.rub.sell)) {
-                        minRUB = value;
-                    }
-                }
-                // Best cource buy gbp
-                if (gbpB > 0) {
-                    if (!maxGBP) { maxGBP = value; } else if (gbpB > parseFloat(maxGBP.cash.gbp.buy)) {
-                        maxGBP = value;
-                    }
-                }
-                // Best cource sell gbp
-                if (gbpS > 0) {
-                    if (!minGBP) { minGBP = value; } else if (gbpS < parseFloat(minGBP.cash.gbp.sell)) {
-                        minGBP = value;
-                    }
-                }
-                // Best cource buy gbp
-                if (tryB > 0) {
-                    if (!maxTRY) { maxTRY = value; } else if (tryB > parseFloat(maxTRY.cash.try.buy)) {
-                        maxTRY = value;
-                    }
-                }
-                // Best cource sell try
-                if (tryS > 0) {
-                    if (!minTRY) { minTRY = value; } else if (tryS < parseFloat(minTRY.cash.try.sell)) {
-                        minTRY = value;
-                    }
-                }
-            });
-
-            var ArMaxUSD = [],
-                ArMaxEUR = [],
-                ArMaxRUB = [],
-                ArMaxGBP = [],
-                ArMaxTRY = [];
-            var ArMinUSD = [],
-                ArMinEUR = [],
-                ArMinRUB = [],
-                ArMinGBP = [],
-                ArMinTRY = [];
-
-            $.each(resp, function(i, value) {
-                var usdB = parseFloat(value.cash.usd.buy);
-                var usdS = parseFloat(value.cash.usd.sell);
-                var eurB = parseFloat(value.cash.eur.buy);
-                var eurS = parseFloat(value.cash.eur.sell);
-                var rubB = parseFloat(value.cash.rub.buy);
-                var rubS = parseFloat(value.cash.rub.sell);
-                var gbpB = parseFloat(value.cash.gbp.buy);
-                var gbpS = parseFloat(value.cash.gbp.sell);
-                var tryB = parseFloat(value.cash.try.buy);
-                var tryS = parseFloat(value.cash.try.sell);
-
-                // Best cource buy usd
-                if (maxUSD) {
-                    if (usdB == parseFloat(maxUSD.cash.usd.buy)) {
-                        ArMaxUSD.push(value);
-                    }
-                }
-                // Best cource sell usd
-                if (minUSD) {
-                    if (usdS == parseFloat(minUSD.cash.usd.sell)) {
-                        ArMinUSD.push(value);
-                    }
-                }
-                // Best cource buy eur
-                if (maxEUR) {
-                    if (eurB == parseFloat(maxEUR.cash.eur.buy)) {
-                        ArMaxEUR.push(value);
-                    }
-                }
-                // Best cource sell eur
-                if (minEUR) {
-                    if (eurS == parseFloat(minEUR.cash.eur.sell)) {
-                        ArMinEUR.push(value);
-                    }
-                }
-                // Best cource buy rub
-                if (maxRUB) {
-                    if (rubB == parseFloat(maxRUB.cash.rub.buy)) {
-                        ArMaxRUB.push(value);
-                    }
-                }
-                // Best cource sell rub
-                if (minRUB) {
-                    if (rubS == parseFloat(minRUB.cash.rub.sell)) {
-                        ArMinRUB.push(value);
-                    }
-                }
-                // Best cource buy gbp
-                if (maxGBP) {
-                    if (gbpB == parseFloat(maxGBP.cash.gbp.buy)) {
-                        ArMaxGBP.push(value);
-                    }
-                }
-                // Best cource sell gbp
-                if (minGBP) {
-                    if (gbpS == parseFloat(minGBP.cash.gbp.sell)) {
-                        ArMinGBP.push(value);
-                    }
-                }
-                // Best cource buy try
-                if (maxTRY) {
-                    if (tryB == parseFloat(maxTRY.cash.try.buy)) {
-                        ArMaxTRY.push(value);
-                    }
-                }
-                // Best cource sell try
-                if (minTRY) {
-                    if (tryS == parseFloat(minTRY.cash.try.sell)) {
-                        ArMinTRY.push(value);
-                    }
-                }
-            });
-
-            // Output all max currency usd
-            $.each(ArMaxUSD, function(i) {
-                parrent.find("td[data-cource-buy='usd']").append(
-                    '<div class="currency-table__rate__num">' + ArMaxUSD[i].cash.usd.buy + '</div>' +
-                    '<a href="' + ArMaxUSD[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxUSD[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all min currency usd
-            $.each(ArMinUSD, function(i) {
-                parrent.find("td[data-cource-sell='usd']").append(
-                    '<div class="currency-table__rate__num">' + ArMinUSD[i].cash.usd.sell + '</div>' +
-                    '<a href="' + ArMinUSD[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinUSD[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all max currency eur
-            $.each(ArMaxEUR, function(i) {
-                parrent.find("td[data-cource-buy='eur']").append(
-                    '<div class="currency-table__rate__num">' + ArMaxEUR[i].cash.eur.buy + '</div>' +
-                    '<a href="' + ArMaxEUR[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxEUR[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all min currency eur
-            $.each(ArMinEUR, function(i) {
-                parrent.find("td[data-cource-sell='eur']").append(
-                    '<div class="currency-table__rate__num">' + ArMinEUR[i].cash.eur.sell + '</div>' +
-                    '<a href="' + ArMinEUR[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinEUR[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all max currency rub
-            $.each(ArMaxRUB, function(i) {
-                parrent.find("td[data-cource-buy='rub']").append(
-                    '<div class="currency-table__rate__num">' + ArMaxRUB[i].cash.rub.buy + '</div>' +
-                    '<a href="' + ArMaxRUB[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxRUB[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all min currency rub
-            $.each(ArMinRUB, function(i) {
-                parrent.find("td[data-cource-sell='rub']").append(
-                    '<div class="currency-table__rate__num">' + ArMinRUB[i].cash.rub.sell + '</div>' +
-                    '<a href="' + ArMinRUB[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinRUB[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all max currency gbp
-            $.each(ArMaxGBP, function(i) {
-                parrent.find("td[data-cource-buy='gbp']").append(
-                    '<div class="currency-table__rate__num">' + ArMaxGBP[i].cash.gbp.buy + '</div>' +
-                    '<a href="' + ArMaxGBP[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxGBP[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all min currency gbp
-            $.each(ArMinGBP, function(i) {
-                parrent.find("td[data-cource-sell='gbp']").append(
-                    '<div class="currency-table__rate__num">' + ArMinGBP[i].cash.gbp.sell + '</div>' +
-                    '<a href="' + ArMinGBP[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinGBP[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all max currency try
-            $.each(ArMaxTRY, function(i) {
-                parrent.find("td[data-cource-buy='try']").append(
-                    '<div class="currency-table__rate__num">' + ArMaxTRY[i].cash.try.buy + '</div>' +
-                    '<a href="' + ArMaxTRY[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxTRY[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-            // Output all min currency try
-            $.each(ArMinTRY, function(i) {
-                parrent.find("td[data-cource-sell='try']").append(
-                    '<div class="currency-table__rate__num">' + ArMinTRY[i].cash.try.sell + '</div>' +
-                    '<a href="' + ArMinTRY[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinTRY[i].name + '</div>' +
-                    '</a>'
-                );
-            });
-
-        }
-    });
-}
-
-function getJsonUpdateBestCource() {
-    $.ajax({
-        url: "/data/data.json",
-        success: function(resp) {
-            // CBAR Cource
-            var k = 33;
-            var parrent = $(".currency-table__table tbody");
-            parrent.find("td[data-cource-cbar='usd'] .currency-table__rate__num").text(resp[k].cash.usd.buy);
-            parrent.find("td[data-cource-cbar='eur'] .currency-table__rate__num").text(resp[k].cash.eur.buy);
-            parrent.find("td[data-cource-cbar='rub'] .currency-table__rate__num").text(resp[k].cash.rub.buy);
-            parrent.find("td[data-cource-cbar='gbp'] .currency-table__rate__num").text(resp[k].cash.gbp.buy);
-            parrent.find("td[data-cource-cbar='try'] .currency-table__rate__num").text(resp[k].cash.try.buy);
-
-            var maxUSD, maxEUR, maxRUB, maxGBP, maxTRY;
-            var minUSD, minEUR, minRUB, minGBP, minTRY;
-
-            resp = resp.slice(0, 33);
-
-            $.each(resp, function(i, value) {
-                var usdB = parseFloat(value.cash.usd.buy);
-                var usdS = parseFloat(value.cash.usd.sell);
-                var eurB = parseFloat(value.cash.eur.buy);
-                var eurS = parseFloat(value.cash.eur.sell);
-                var rubB = parseFloat(value.cash.rub.buy);
-                var rubS = parseFloat(value.cash.rub.sell);
-                var gbpB = parseFloat(value.cash.gbp.buy);
-                var gbpS = parseFloat(value.cash.gbp.sell);
-                var tryB = parseFloat(value.cash.try.buy);
-                var tryS = parseFloat(value.cash.try.sell);
-
-                // Best cource buy usd
-                if (usdB > 0) {
-                    if (!maxUSD) { maxUSD = value; } else if (usdB > parseFloat(maxUSD.cash.usd.buy)) {
-                        maxUSD = value;
-                    }
-                }
-                // Best cource sell usd
-                if (usdS > 0) {
-                    if (!minUSD) { minUSD = value; } else if (usdS < parseFloat(minUSD.cash.usd.sell)) {
-                        minUSD = value;
-                    }
-                }
-                // Best cource buy eur
-                if (eurB > 0) {
-                    if (!maxEUR) { maxEUR = value; } else if (eurB > parseFloat(maxEUR.cash.eur.buy)) {
-                        maxEUR = value;
-                    }
-                }
-                // Best cource sell eur
-                if (eurS > 0) {
-                    if (!minEUR) { minEUR = value; } else if (eurS < parseFloat(minEUR.cash.eur.sell)) {
-                        minEUR = value;
-                    }
-                }
-                // Best cource buy rub
-                if (rubB > 0) {
-                    if (!maxRUB) { maxRUB = value; } else if (rubB > parseFloat(maxRUB.cash.rub.buy)) {
-                        maxRUB = value;
-                    }
-                }
-                // Best cource sell rub
-                if (rubS > 0) {
-                    if (!minRUB) { minRUB = value; } else if (rubS < parseFloat(minRUB.cash.rub.sell)) {
-                        minRUB = value;
-                    }
-                }
-                // Best cource buy gbp
-                if (gbpB > 0) {
-                    if (!maxGBP) { maxGBP = value; } else if (gbpB > parseFloat(maxGBP.cash.gbp.buy)) {
-                        maxGBP = value;
-                    }
-                }
-                // Best cource sell gbp
-                if (gbpS > 0) {
-                    if (!minGBP) { minGBP = value; } else if (gbpS < parseFloat(minGBP.cash.gbp.sell)) {
-                        minGBP = value;
-                    }
-                }
-                // Best cource buy gbp
-                if (tryB > 0) {
-                    if (!maxTRY) { maxTRY = value; } else if (tryB > parseFloat(maxTRY.cash.try.buy)) {
-                        maxTRY = value;
-                    }
-                }
-                // Best cource sell try
-                if (tryS > 0) {
-                    if (!minTRY) { minTRY = value; } else if (tryS < parseFloat(minTRY.cash.try.sell)) {
-                        minTRY = value;
-                    }
-                }
-            });
-
-            var ArMaxUSD = [],
-                ArMaxEUR = [],
-                ArMaxRUB = [],
-                ArMaxGBP = [],
-                ArMaxTRY = [];
-            var ArMinUSD = [],
-                ArMinEUR = [],
-                ArMinRUB = [],
-                ArMinGBP = [],
-                ArMinTRY = [];
-
-            $.each(resp, function(i, value) {
-                var usdB = parseFloat(value.cash.usd.buy);
-                var usdS = parseFloat(value.cash.usd.sell);
-                var eurB = parseFloat(value.cash.eur.buy);
-                var eurS = parseFloat(value.cash.eur.sell);
-                var rubB = parseFloat(value.cash.rub.buy);
-                var rubS = parseFloat(value.cash.rub.sell);
-                var gbpB = parseFloat(value.cash.gbp.buy);
-                var gbpS = parseFloat(value.cash.gbp.sell);
-                var tryB = parseFloat(value.cash.try.buy);
-                var tryS = parseFloat(value.cash.try.sell);
-
-                // Best cource buy usd
-                if (maxUSD) {
-                    if (usdB == parseFloat(maxUSD.cash.usd.buy)) {
-                        ArMaxUSD.push(value);
-                    }
-                }
-                // Best cource sell usd
-                if (minUSD) {
-                    if (usdS == parseFloat(minUSD.cash.usd.sell)) {
-                        ArMinUSD.push(value);
-                    }
-                }
-                // Best cource buy eur
-                if (maxEUR) {
-                    if (eurB == parseFloat(maxEUR.cash.eur.buy)) {
-                        ArMaxEUR.push(value);
-                    }
-                }
-                // Best cource sell eur
-                if (minEUR) {
-                    if (eurS == parseFloat(minEUR.cash.eur.sell)) {
-                        ArMinEUR.push(value);
-                    }
-                }
-                // Best cource buy rub
-                if (maxRUB) {
-                    if (rubB == parseFloat(maxRUB.cash.rub.buy)) {
-                        ArMaxRUB.push(value);
-                    }
-                }
-                // Best cource sell rub
-                if (minRUB) {
-                    if (rubS == parseFloat(minRUB.cash.rub.sell)) {
-                        ArMinRUB.push(value);
-                    }
-                }
-                // Best cource buy gbp
-                if (maxGBP) {
-                    if (gbpB == parseFloat(maxGBP.cash.gbp.buy)) {
-                        ArMaxGBP.push(value);
-                    }
-                }
-                // Best cource sell gbp
-                if (minGBP) {
-                    if (gbpS == parseFloat(minGBP.cash.gbp.sell)) {
-                        ArMinGBP.push(value);
-                    }
-                }
-                // Best cource buy try
-                if (maxTRY) {
-                    if (tryB == parseFloat(maxTRY.cash.try.buy)) {
-                        ArMaxTRY.push(value);
-                    }
-                }
-                // Best cource sell try
-                if (minTRY) {
-                    if (tryS == parseFloat(minTRY.cash.try.sell)) {
-                        ArMinTRY.push(value);
-                    }
-                }
-            });
-
-            // Output all max currency usd
-            var htmlDataMaxUSD = '';
-            $.each(ArMaxUSD, function(i) {
-                htmlDataMaxUSD += '<div class="currency-table__rate__num">' + ArMaxUSD[i].cash.usd.buy + '</div>' +
-                    '<a href="' + ArMaxUSD[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxUSD[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-buy='usd']").replaceWith('<td class="currency-table__rate" data-cource-buy="usd">' + htmlDataMaxUSD + '</td>');
-
-            // Output all min currency usd
-            var htmlDataMinUSD = '';
-            $.each(ArMinUSD, function(i) {
-                htmlDataMinUSD += '<div class="currency-table__rate__num">' + ArMinUSD[i].cash.usd.sell + '</div>' +
-                    '<a href="' + ArMinUSD[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinUSD[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-sell='usd']").replaceWith('<td class="currency-table__rate" data-cource-sell="usd">' + htmlDataMinUSD + '</td>');
-
-            // Output all max currency eur
-            var htmlDataMaxEUR = '';
-            $.each(ArMaxEUR, function(i) {
-                htmlDataMaxEUR += '<div class="currency-table__rate__num">' + ArMaxEUR[i].cash.eur.buy + '</div>' +
-                    '<a href="' + ArMaxEUR[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxEUR[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-buy='eur']").replaceWith('<td class="currency-table__rate" data-cource-buy="eur">' + htmlDataMaxEUR + '</td>');
-
-            // Output all min currency eur
-            var htmlDataMinEUR = '';
-            $.each(ArMinEUR, function(i) {
-                htmlDataMinEUR += '<div class="currency-table__rate__num">' + ArMinEUR[i].cash.eur.sell + '</div>' +
-                    '<a href="' + ArMinEUR[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinEUR[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-sell='eur']").replaceWith('<td class="currency-table__rate" data-cource-sell="eur">' + htmlDataMinEUR + '</td>');
-
-            // Output all max currency rub
-            var htmlDataMaxRUB = '';
-            $.each(ArMaxRUB, function(i) {
-                htmlDataMaxRUB += '<div class="currency-table__rate__num">' + ArMaxRUB[i].cash.rub.buy + '</div>' +
-                    '<a href="' + ArMaxRUB[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxRUB[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-buy='rub']").replaceWith('<td class="currency-table__rate" data-cource-buy="rub">' + htmlDataMaxRUB + '</td>');
-
-            // Output all min currency rub
-            var htmlDataMinRUB = '';
-            $.each(ArMinRUB, function(i) {
-                htmlDataMinRUB += '<div class="currency-table__rate__num">' + ArMinRUB[i].cash.rub.sell + '</div>' +
-                    '<a href="' + ArMinRUB[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinRUB[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-sell='rub']").replaceWith('<td class="currency-table__rate" data-cource-sell="rub">' + htmlDataMinRUB + '</td>');
-
-            // Output all max currency gbp
-            var htmlDataMaxGBP = '';
-            $.each(ArMaxGBP, function(i) {
-                htmlDataMaxGBP += '<div class="currency-table__rate__num">' + ArMaxGBP[i].cash.gbp.buy + '</div>' +
-                    '<a href="' + ArMaxGBP[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxGBP[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-buy='gbp']").replaceWith('<td class="currency-table__rate" data-cource-buy="gbp">' + htmlDataMaxGBP + '</td>');
-
-            // Output all min currency gbp
-            var htmlDataMinGBP = '';
-            $.each(ArMinGBP, function(i) {
-                htmlDataMinGBP += '<div class="currency-table__rate__num">' + ArMinGBP[i].cash.gbp.sell + '</div>' +
-                    '<a href="' + ArMinGBP[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinGBP[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-sell='gbp']").replaceWith('<td class="currency-table__rate" data-cource-sell="gbp">' + htmlDataMinGBP + '</td>');
-
-            // Output all max currency try
-            var htmlDataMaxTRY = '';
-            $.each(ArMaxTRY, function(i) {
-                htmlDataMaxTRY += '<div class="currency-table__rate__num">' + ArMaxTRY[i].cash.try.buy + '</div>' +
-                    '<a href="' + ArMaxTRY[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMaxTRY[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-buy='try']").replaceWith('<td class="currency-table__rate" data-cource-buy="try">' + htmlDataMaxTRY + '</td>');
-
-            // Output all min currency try
-            var htmlDataMinTRY = '';
-            $.each(ArMinTRY, function(i) {
-                htmlDataMinTRY += '<div class="currency-table__rate__num">' + ArMinTRY[i].cash.try.sell + '</div>' +
-                    '<a href="' + ArMinTRY[i].link + '" class="currency-table__link" target="_blank">' +
-                    '<div class="currency-table__rate__text">' + ArMinTRY[i].name + '</div>' +
-                    '</a>';
-            });
-            parrent.find("td[data-cource-sell='try']").replaceWith('<td class="currency-table__rate" data-cource-sell="try">' + htmlDataMinTRY + '</td>');
-
-        }
-    });
-}
-
-function getJsonTime() {
-    $.ajax({
-        url: "/data/data.json",
-        success: function(resp) {
-            var i = 0;
-            $("#banks-1 thead th:last-child").replaceWith('<th style="width: 10%">' + resp[i].update_time + '</th>');
-            $("#banks-2 thead th:last-child").replaceWith('<th style="width: 10%">' + resp[i].update_time + '</th>');
-            $("#banks-3 thead th:last-child").replaceWith('<th style="width: 10%">' + resp[i].update_time + '</th>');
-        }
-    });
-}
-
-$(document).ready(function() {
-    getOilAndGold();
-
-    $('body').on('click', '.gmaps', function(e) {
-        e.preventDefault();
-        var link = $(this).data('link');
-        var name = $(this).parent().find('a.font-bold').text();
-
-        $.magnificPopup.open({
-            items: {
-                src: link
-            },
-            disableOn: 700,
-            type: 'iframe',
-            mainClass: 'mfp-fade',
-            removalDelay: 160,
-            preloader: true,
-            fixedContentPos: false,
-            iframe: {
-                markup: '<div class="mfp-iframe-scaler">' +
-                    '<div class="mfp-panel">' + name + '</div>' +
-                    '<div class="mfp-close"></div>' +
-                    '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>' +
-                    '</div>',
-            }
-        });
-    });
-
-    // Update data
-    setInterval(function() {
-        getOilAndGold();
-    }, 300000);
-
-    // menu select
-    if (getPage() == "/noncash") {
-        $(".main-menu li:nth-child(2)").addClass("active");
-    } else if (getPage() == "/crossrates") {
-        $(".main-menu li:nth-child(3)").addClass("active");
-    } else if (getPage() == "/rates") {
-        $(".main-menu li:nth-child(4)").addClass("active");
-    } else if (getPage() == "/converter") {
-        $(".main-menu li:nth-child(5)").addClass("active");
-    } else if (getPage() == "/24h") {
-        $(".main-menu li:nth-child(6)").addClass("active");
-    } else {
-        $(".main-menu li:nth-child(1)").addClass("active");
-    }
-
-
-
-});
-
-//Get page from url
-function getPage() {
-    return window.location.pathname;
-}
-
-function getOilAndGold() {
-    $.ajax({
-        url: "/data/data.json",
-        success: function(resp) {
-            var k = 34;
-            var parrent = $(".goldandoil");
-            parrent.find(".oil .value").text(resp[k].cash.oil.data);
-            parrent.find(".gold .value").text(resp[k].cash.gold.data);
-        }
-    });
-}
-
-// Open Tab
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  });
+
+  ga('create', 'UA-91231305-2', 'auto');
+  ga('send', 'pageview');
 
 </script>
-<main class="main">
-	<div id="tab1" class="tabcontent" style="display: block;">
+    <header class="header">
+        <div class="container">
+            <div class="header__logo">
+                <a href="https://www.azn.az/" class="header__logo">
+                    <img src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/logo.svg" alt="azn.az" style="height: 100px;">
+                </a>
+            </div>
+    
+     
+        </div>
+    </header>
 
+        <div class="customers-block">
+>
+    </div>
+	
+
+<main class="main">
+	<h1>Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)</h1>
+	
+	<div id="tab1" class="tabcontent" style="display: none;">
+		<div class="currency-table">
+			<table class="currency-table__table">
+				<thead>
+					<tr>
+						<td class="currency-table__main-currency-col currency-table__title-first font-bold">Valyuta</td>
+						<td class="currency-table__darken-bg currency-table__title-first font-bold">Mərkəzi Bankın məzənnəsi</td>
+						<td class="currency-table__title-first font-bold" colspan="2">Ən sərfəli məzənnə</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="currency-table__darken-bg"></td>
+						<td class="currency-table__title-second" style="width: 30%;">Alış</td>
+						<td class="currency-table__title-second" style="width: 30%;">Satış</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="currency-table__currency-name">USD</td>
+						<td class="currency-table__rate currency-table__darken-bg" data-cource-cbar="usd">
+							<a href="http://www.cbar.az/" class="currency-table__link" target="_blank">
+								<div class="currency-table__rate__num">1.7000</div>
+							</a>
+						</td>
+						<td class="currency-table__rate" data-cource-buy="usd"><div class="currency-table__rate__num">1.6980</div><a href="http://www.azerpost.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">Azərpoçt</div></a></td>
+						<td class="currency-table__rate" data-cource-sell="usd"><div class="currency-table__rate__num">1.7</div><a href="https://afb.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">AFB Bank</div></a><div class="currency-table__rate__num">1.7000</div><a href="http://www.bmibaku.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">Bank Melli İran Bakı filialı</div></a><div class="currency-table__rate__num">1.7000</div><a href="http://www.vtb.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">Bank VTB (Azərbaycan)</div></a><div class="currency-table__rate__num">1.7000</div><a href="https://turanbank.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">TuranBank</div></a><div class="currency-table__rate__num">1.7000</div><a href="http://www.unibank.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">Unibank</div></a></td>
+					</tr>
+					<tr class="currency-table__bordered-row">
+						<td class="currency-table__currency-name">EUR</td>
+						<td class="currency-table__rate currency-table__darken-bg" data-cource-cbar="eur">
+							<a href="http://www.cbar.az/" class="currency-table__link" target="_blank">
+								<div class="currency-table__rate__num">1.9087</div>
+							</a>
+						</td>
+						<td class="currency-table__rate" data-cource-buy="eur"><div class="currency-table__rate__num">1.8903</div><a href="https://kapitalbank.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">Kapital Bank</div></a></td>
+						<td class="currency-table__rate" data-cource-sell="eur"><div class="currency-table__rate__num">1.9100</div><a href="http://www.bmibaku.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">Bank Melli İran Bakı filialı</div></a></td>
+					</tr>               
+				</tbody>
+			</table>
+		</div>
 		<div class="list-banks">
 			<table class="standard-table top-banks">
 				<thead>
 					<tr>
-	<!-- 					<th rowspan="1" style="width: 5%;">
-							<span class="th-sortable__text th-sortable__text--double-height">№</span>
-	 -->					</th>
-						<th class="th-sortable" rowspan="1" style="width: 25%;">
+						<th class="th-sortable" rowspan="2" style="width: 25%;">
 							<span class="th-sortable__text th-sortable__text--double-height">Bank</span>
 						</th>
 						<th class="colspan font-size-medium font-bold" style="width: 30%;" colspan="2">
 							USD
 						</th>
-						<!-- <th rowspan="2" style="width: 10px; padding: 0;"></th> -->
+						<th rowspan="2" style="width: 10px; padding: 0;"></th>
 						<th class="colspan font-size-medium font-bold" style="width: 30%;" colspan="2">
 							EUR
 						</th>
-<!-- 						<th rowspan="2" style="width: 10%;">
+						<th rowspan="2" style="width: 10%;">
 							Yeniləmə vaxtı
-	 -->					</th>
+						</th>
 					</tr>
 				</thead>
 			</table>    
 			<table class="standard-table standard-table--row-highlight banks" id="banks-1">
 				<thead>
 					<tr>
-						<th class="th-sortable" data-sort="string" colspan="1" style="width: 25%"></th>
+						<th class="th-sortable" data-sort="string" style="width: 25%"></th>
 						<th class="th-sortable" data-sort="float" style="width: 15%">
 							<span class="th-sortable__text">Alış</span>
 						</th>
@@ -896,35 +126,55 @@ function openTab(evt, tabName) {
 						<th class="th-sortable" data-sort="float" style="width: 15%">
 							<span class="th-sortable__text">Satış</span>
 						</th>
-						<!-- <th style="width: 10%">2023-07-15 21:00:43</th> -->
+						<th style="width: 10%">2023-07-17 19:00:37</th>
 					</tr>
 				</thead>
-				<tbody>
-				<tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=197S2IBb2Itp7J7UMDcIzbmaBVTg"></a><a class="font-bold" href="http://www.accessbank.az/" target="_blank">Access Bank</a></td><td class="font-size-large" data-cource="1.6800">1.6800<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7017">1.7017<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8715">1.8715<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9250">1.9250<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1G54P3j8_g74L3uRV7rwAlIY4MME"></a><a class="font-bold" href="https://afb.az/" target="_blank">AFB Bank</a></td><td class="font-size-large" data-cource="1.695">1.695<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7">1.7<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.891">1.891<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9165">1.9165<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1Tdxjj0JmYKJqbwxkjq4PH5lfAjw"></a><a class="font-bold" href="http://www.azerpost.az/" target="_blank">Azərpoçt</a></td><td class="font-size-large" data-cource="1.6980">1.6980<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7010">1.7010<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8800">1.8800<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9400">1.9400<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1n_AqyAjGQxUHLTXDbj1Zmn3CvIc"></a><a class="font-bold" href="https://www.ibar.az/" target="_blank">Azərbaycan Beynəlxalq Bankı</a></td><td class="font-size-large" data-cource="1.6970">1.6970<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7020">1.7020<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8715">1.8715<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9198">1.9198<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1S5wSojRk03HovJOpn7RKPadaALs"></a><a class="font-bold" href="http://www.bmibaku.az/" target="_blank">Bank Melli İran Bakı filialı</a></td><td class="font-size-large" data-cource="1.6960">1.6960<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7000">1.7000<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8920">1.8920<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9150">1.9150<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=135qngqoTcGAymMYcpW-g5ygAzXQ"></a><a class="font-bold" href="https://www.bankrespublika.az/" target="_blank">Bank Respublika</a></td><td class="font-size-large" data-cource="1.69">1.69<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.702">1.702<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.824">1.824<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.995">1.995<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1acvwbGj9eCqRadLhb9g-aSKSVI4"></a><a class="font-bold" href="http://www.premiumbank.az/" target="_blank">Premium Bank</a></td><td class="font-size-large" data-cource="1.695">1.695<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.701">1.701<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.885">1.885<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.925">1.925<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1zGX9Dz1H2iTQgvL80RuuGEYdNyU"></a><a class="font-bold" href="http://www.vtb.az/" target="_blank">Bank VTB (Azərbaycan)</a></td><td class="font-size-large" data-cource="1.6950">1.6950<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7000">1.7000<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8850">1.8850<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9360">1.9360<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1O2J3bz1EriNQfHxaUbCJ9xXs4YY"></a><a class="font-bold" href="https://kapitalbank.az/" target="_blank">Kapital Bank</a></td><td class="font-size-large" data-cource="1.6970">1.6970<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7200">1.7200<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8913">1.8913<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9947">1.9947<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=12zcRvu6HuImKdv2SaL6kVAnQb-g"></a><a class="font-bold" href="http://www.muganbank.az/" target="_blank">Muğanbank</a></td><td class="font-size-large" data-cource="1.6970">1.6970<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7020">1.7020<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8900">1.8900<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9500">1.9500<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1_adbaW9WxIbDSRAmMJhIeTi8uhg"></a><a class="font-bold" href="http://www.pashabank.az/" target="_blank">Paşa Bank</a></td><td class="font-size-large" data-cource="1.6970">1.6970<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7020">1.7020<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8790">1.8790<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9400">1.9400<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1XHD80mcmF7CHFyToQC4tucrPRW53Ejw"></a><a class="font-bold" href="https://rabitabank.com/" target="_blank">Rabitə Bank</a></td><td class="font-size-large" data-cource="1.695">1.695<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7025">1.7025<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.889">1.889<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.931">1.931<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1rcCXlM84szzcqtPt2qaHo5aX3rw"></a><a class="font-bold" href="https://turanbank.az/" target="_blank">TuranBank</a></td><td class="font-size-large" data-cource="1.6900">1.6900<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7000">1.7000<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8900">1.8900<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9240">1.9240<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1MLUu_zBChe6yLpJ4elnujjtv3uQ"></a><a class="font-bold" href="http://www.unibank.az/" target="_blank">Unibank</a></td><td class="font-size-large" data-cource="1.6940">1.6940<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7000">1.7000<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8791">1.8791<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9393">1.9393<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1G2z-fZbn8-_4Png1VwIo8IomKGc"></a><a class="font-bold" href="http://www.xalqbank.az/" target="_blank">Xalq Bank</a></td><td class="font-size-large" data-cource="1.695">1.695<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8887">1.8887<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9383">1.9383<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=16glsi6aXSSEd501V7xmq7-TqJBM"></a><a class="font-bold" href="https://www.yapikredi.com.az/" target="_blank">Yapı Kredi Bank Azərbaycan</a></td><td class="font-size-large" data-cource="1.6950">1.6950<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7005">1.7005<i class="icon-font icon-calculator calculator"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8810">1.8810<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9290">1.9290<i class="icon-font icon-calculator calculator"></i><span class="currency_code">eur</span></td><td></td></tr></tbody>
+				<tbody><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=197S2IBb2Itp7J7UMDcIzbmaBVTg"></a><a class="font-bold" href="http://www.accessbank.az/" target="_blank">Access Bank</a></td><td class="font-size-large" data-cource="1.6800">1.6800<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7017">1.7017<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8705">1.8705<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9240">1.9240<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1G54P3j8_g74L3uRV7rwAlIY4MME"></a><a class="font-bold" href="https://afb.az/" target="_blank">AFB Bank</a></td><td class="font-size-large" data-cource="1.695">1.695<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7">1.7<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.88">1.88<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9155">1.9155<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1Tdxjj0JmYKJqbwxkjq4PH5lfAjw"></a><a class="font-bold" href="http://www.azerpost.az/" target="_blank">Azərpoçt</a></td><td class="font-size-large" data-cource="1.6980">1.6980<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7010">1.7010<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8800">1.8800<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9400">1.9400<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1n_AqyAjGQxUHLTXDbj1Zmn3CvIc"></a><a class="font-bold" href="https://www.ibar.az/" target="_blank">Azərbaycan Beynəlxalq Bankı</a></td><td class="font-size-large" data-cource="1.6970">1.6970<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7020">1.7020<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8705">1.8705<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9188">1.9188<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1t9F03KXX0ELjhJVrOXmIn0EeTBA"></a><a class="font-bold" href="https://bankavrasiya.az/" target="_blank">Bank Avrasiya</a></td><td class="font-size-large" data-cource="1.6950">1.6950<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7010">1.7010<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8740">1.8740<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9310">1.9310<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1S5wSojRk03HovJOpn7RKPadaALs"></a><a class="font-bold" href="http://www.bmibaku.az/" target="_blank">Bank Melli İran Bakı filialı</a></td><td class="font-size-large" data-cource="1.6960">1.6960<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7000">1.7000<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8880">1.8880<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9100">1.9100<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=135qngqoTcGAymMYcpW-g5ygAzXQ"></a><a class="font-bold" href="https://www.bankrespublika.az/" target="_blank">Bank Respublika</a></td><td class="font-size-large" data-cource="1.69">1.69<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.702">1.702<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.872">1.872<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.929">1.929<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1acvwbGj9eCqRadLhb9g-aSKSVI4"></a><a class="font-bold" href="http://www.premiumbank.az/" target="_blank">Premium Bank</a></td><td class="font-size-large" data-cource="1.695">1.695<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.701">1.701<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.885">1.885<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.925">1.925<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1zGX9Dz1H2iTQgvL80RuuGEYdNyU"></a><a class="font-bold" href="http://www.vtb.az/" target="_blank">Bank VTB (Azərbaycan)</a></td><td class="font-size-large" data-cource="1.6950">1.6950<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7000">1.7000<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8860">1.8860<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9350">1.9350<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1O2J3bz1EriNQfHxaUbCJ9xXs4YY"></a><a class="font-bold" href="https://kapitalbank.az/" target="_blank">Kapital Bank</a></td><td class="font-size-large" data-cource="1.6970">1.6970<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7200">1.7200<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8903">1.8903<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9937">1.9937<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=12zcRvu6HuImKdv2SaL6kVAnQb-g"></a><a class="font-bold" href="http://www.muganbank.az/" target="_blank">Muğanbank</a></td><td class="font-size-large" data-cource="1.6970">1.6970<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7020">1.7020<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8880">1.8880<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9470">1.9470<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1_adbaW9WxIbDSRAmMJhIeTi8uhg"></a><a class="font-bold" href="http://www.pashabank.az/" target="_blank">Paşa Bank</a></td><td class="font-size-large" data-cource="1.6970">1.6970<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7020">1.7020<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8780">1.8780<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9390">1.9390<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1XHD80mcmF7CHFyToQC4tucrPRW53Ejw"></a><a class="font-bold" href="https://rabitabank.com/" target="_blank">Rabitə Bank</a></td><td class="font-size-large" data-cource="1.695">1.695<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7025">1.7025<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.888">1.888<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.93">1.93<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1rcCXlM84szzcqtPt2qaHo5aX3rw"></a><a class="font-bold" href="https://turanbank.az/" target="_blank">TuranBank</a></td><td class="font-size-large" data-cource="1.6900">1.6900<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7000">1.7000<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8890">1.8890<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9180">1.9180<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1MLUu_zBChe6yLpJ4elnujjtv3uQ"></a><a class="font-bold" href="http://www.unibank.az/" target="_blank">Unibank</a></td><td class="font-size-large" data-cource="1.6940">1.6940<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7000">1.7000<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8782">1.8782<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9383">1.9383<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1G2z-fZbn8-_4Png1VwIo8IomKGc"></a><a class="font-bold" href="http://www.xalqbank.az/" target="_blank">Xalq Bank</a></td><td class="font-size-large" data-cource="1.695">1.695<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8877">1.8877<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9373">1.9373<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=16glsi6aXSSEd501V7xmq7-TqJBM"></a><a class="font-bold" href="https://www.yapikredi.com.az/" target="_blank">Yapı Kredi Bank Azərbaycan</a></td><td class="font-size-large" data-cource="1.6950">1.6950<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.7005">1.7005<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">usd</span></td><td class="font-size-large" data-cource="1.8800">1.8800<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td class="font-size-large" data-cource="1.9280">1.9280<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">eur</span></td><td></td></tr></tbody>
 			</table>
 		</div>
 	</div>
-	<div id="tab2" class="tabcontent">
+	<div id="tab2" class="tabcontent" style="display: block;">
+		<div class="currency-table">
+			<table class="currency-table__table">
+				<thead>
+					<tr>
+						<td></td>
+						<td class="currency-table__darken-bg"></td>
+						<td class="currency-table__title-second" style="width: 30%;">Alış</td>
+						<td class="currency-table__title-second" style="width: 30%;">Satış</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="currency-table__bordered-row">
+						<td class="currency-table__currency-name">GBP</td>
+						<td class="currency-table__rate currency-table__darken-bg" data-cource-cbar="gbp">
+							<a href="http://www.cbar.az/" class="currency-table__link" target="_blank">
+								<div class="currency-table__rate__num">2.2254</div>
+							</a>
+						</td>
+						<td class="currency-table__rate" data-cource-buy="gbp"><div class="currency-table__rate__num">2.2150</div><a href="http://www.muganbank.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">Muğanbank</div></a><div class="currency-table__rate__num">2.2150</div><a href="https://turanbank.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">TuranBank</div></a></td>
+						<td class="currency-table__rate" data-cource-sell="gbp"><div class="currency-table__rate__num">2.14</div><a href="https://www.bankrespublika.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">Bank Respublika</div></a></td>
+					</tr>               
+				</tbody>
+			</table>
+		</div>
 		<div class="list-banks">
 			<table class="standard-table top-banks">
 				<thead>
 					<tr>
-						<!-- <th rowspan="2" style="width: 5%;">
-							<span class="th-sortable__text th-sortable__text--double-height">№</span>
-						</th> -->
-						<th class="th-sortable" rowspan="1" style="width: 25%;">
+						<th class="th-sortable" rowspan="2" style="width: 25%;">
 							<span class="th-sortable__text th-sortable__text--double-height">Bank</span>
 						</th>
 						<th class="colspan font-size-medium font-bold" style="width: 30%;" colspan="2">
 							RUB
 						</th>
-						<!-- <th rowspan="2" style="width: 10px; padding: 0;"></th> -->
+						<th rowspan="2" style="width: 10px; padding: 0;"></th>
 						<th class="colspan font-size-medium font-bold" style="width: 30%;" colspan="2">
 							GBP
 						</th>
-		<!-- 				<th rowspan="2" style="width: 10%;">
+						<th rowspan="2" style="width: 10%;">
 							Yeniləmə vaxtı
-		 -->				</th>
+						</th>
 					</tr>
 				</thead>
 			</table>    
@@ -944,30 +194,85 @@ function openTab(evt, tabName) {
 						<th class="th-sortable" data-sort="float" style="width: 15%">
 							<span class="th-sortable__text">Satış</span>
 						</th>
-						<!-- <th style="width: 10%">2023-07-15 21:00:43</th> -->
+						<th style="width: 10%">2023-07-17 19:00:37</th>
 					</tr>
 				</thead>
-				<tbody>
-				<tr class="calculator__container exchange-calculator-rates"><td>
-					<a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1G54P3j8_g74L3uRV7rwAlIY4MME"></a>
-					<a class="font-bold" href="https://afb.az/" target="_blank">AFB Bank</a></td>
-					<td class="font-size-large" data-cource="0.0161">0.0161<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td>
-					<td class="font-size-large" data-cource="0.0197">0.0197<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td>
-					<td class="font-size-large" data-cource="2.206">2.206<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td>
-					<td class="font-size-large" data-cource="2.2715">2.2715<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td>
-					<td>
-					</td>
-				</tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1Tdxjj0JmYKJqbwxkjq4PH5lfAjw"></a><a class="font-bold" href="http://www.azerpost.az/" target="_blank">Azərpoçt</a></td><td class="font-size-large" data-cource="0.0184">0.0184<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0204">0.0204<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.1850">2.1850<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2750">2.2750<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1n_AqyAjGQxUHLTXDbj1Zmn3CvIc"></a><a class="font-bold" href="https://www.ibar.az/" target="_blank">Azərbaycan Beynəlxalq Bankı</a></td><td class="font-size-large" data-cource="0.0161">0.0161<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0217">0.0217<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=135qngqoTcGAymMYcpW-g5ygAzXQ"></a><a class="font-bold" href="https://www.bankrespublika.az/" target="_blank">Bank Respublika</a></td><td class="font-size-large" data-cource="0.015">0.015<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.023">0.023<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.117">2.117<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.117">2.117<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1acvwbGj9eCqRadLhb9g-aSKSVI4"></a><a class="font-bold" href="http://www.premiumbank.az/" target="_blank">Premium Bank</a></td><td class="font-size-large" data-cource="0.0145">0.0145<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0192">0.0192<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.2">2.2<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.25">2.25<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1zGX9Dz1H2iTQgvL80RuuGEYdNyU"></a><a class="font-bold" href="http://www.vtb.az/" target="_blank">Bank VTB (Azərbaycan)</a></td><td class="font-size-large" data-cource="0.0170">0.0170<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0190">0.0190<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.2070">2.2070<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2660">2.2660<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1O2J3bz1EriNQfHxaUbCJ9xXs4YY"></a><a class="font-bold" href="https://kapitalbank.az/" target="_blank">Kapital Bank</a></td><td class="font-size-large" data-cource="0.0129">0.0129<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0225">0.0225<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.1751">2.1751<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2656">2.2656<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=12zcRvu6HuImKdv2SaL6kVAnQb-g"></a><a class="font-bold" href="http://www.muganbank.az/" target="_blank">Muğanbank</a></td><td class="font-size-large" data-cource="0.0170">0.0170<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0210">0.0210<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.2250">2.2250<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2750">2.2750<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1_adbaW9WxIbDSRAmMJhIeTi8uhg"></a><a class="font-bold" href="http://www.pashabank.az/" target="_blank">Paşa Bank</a></td><td class="font-size-large" data-cource="0.0132">0.0132<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0196">0.0196<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.1790">2.1790<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2880">2.2880<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1XHD80mcmF7CHFyToQC4tucrPRW53Ejw"></a><a class="font-bold" href="https://rabitabank.com/" target="_blank">Rabitə Bank</a></td><td class="font-size-large" data-cource="0.0185">0.0185<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0196">0.0196<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.187">2.187<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.265">2.265<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1rcCXlM84szzcqtPt2qaHo5aX3rw"></a><a class="font-bold" href="https://turanbank.az/" target="_blank">TuranBank</a></td><td class="font-size-large" data-cource="0.0150">0.0150<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0190">0.0190<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.2220">2.2220<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2460">2.2460<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=1MLUu_zBChe6yLpJ4elnujjtv3uQ"></a><a class="font-bold" href="http://www.unibank.az/" target="_blank">Unibank</a></td><td class="font-size-large" data-cource="0.0167">0.0167<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0195">0.0195<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.2033">2.2033<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2613">2.2613<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="#" data-link="https://www.google.com/maps/d/embed?mid=16glsi6aXSSEd501V7xmq7-TqJBM"></a><a class="font-bold" href="https://www.yapikredi.com.az/" target="_blank">Yapı Kredi Bank Azərbaycan</a></td><td class="font-size-large" data-cource="0.0161">0.0161<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0217">0.0217<i class="icon-font icon-calculator calculator"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator"></i><span class="currency_code">gbp</span></td><td></td></tr></tbody>
+				<tbody><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1G54P3j8_g74L3uRV7rwAlIY4MME"></a><a class="font-bold" href="https://afb.az/" target="_blank">AFB Bank</a></td><td class="font-size-large" data-cource="0.016">0.016<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0196">0.0196<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.199">2.199<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2645">2.2645<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1Tdxjj0JmYKJqbwxkjq4PH5lfAjw"></a><a class="font-bold" href="http://www.azerpost.az/" target="_blank">Azərpoçt</a></td><td class="font-size-large" data-cource="0.0184">0.0184<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0204">0.0204<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.1850">2.1850<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2750">2.2750<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1n_AqyAjGQxUHLTXDbj1Zmn3CvIc"></a><a class="font-bold" href="https://www.ibar.az/" target="_blank">Azərbaycan Beynəlxalq Bankı</a></td><td class="font-size-large" data-cource="0.0160">0.0160<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0216">0.0216<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=135qngqoTcGAymMYcpW-g5ygAzXQ"></a><a class="font-bold" href="https://www.bankrespublika.az/" target="_blank">Bank Respublika</a></td><td class="font-size-large" data-cource="0.0185">0.0185<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.023">0.023<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.14">2.14<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.14">2.14<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1acvwbGj9eCqRadLhb9g-aSKSVI4"></a><a class="font-bold" href="http://www.premiumbank.az/" target="_blank">Premium Bank</a></td><td class="font-size-large" data-cource="0.0145">0.0145<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.019">0.019<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.2">2.2<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.242">2.242<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1zGX9Dz1H2iTQgvL80RuuGEYdNyU"></a><a class="font-bold" href="http://www.vtb.az/" target="_blank">Bank VTB (Azərbaycan)</a></td><td class="font-size-large" data-cource="0.0170">0.0170<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0198">0.0198<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.1990">2.1990<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2590">2.2590<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1O2J3bz1EriNQfHxaUbCJ9xXs4YY"></a><a class="font-bold" href="https://kapitalbank.az/" target="_blank">Kapital Bank</a></td><td class="font-size-large" data-cource="0.0128">0.0128<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0224">0.0224<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.1682">2.1682<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2587">2.2587<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=12zcRvu6HuImKdv2SaL6kVAnQb-g"></a><a class="font-bold" href="http://www.muganbank.az/" target="_blank">Muğanbank</a></td><td class="font-size-large" data-cource="0.0170">0.0170<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0210">0.0210<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.2150">2.2150<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2650">2.2650<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1_adbaW9WxIbDSRAmMJhIeTi8uhg"></a><a class="font-bold" href="http://www.pashabank.az/" target="_blank">Paşa Bank</a></td><td class="font-size-large" data-cource="0.0132">0.0132<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0195">0.0195<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.1720">2.1720<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2810">2.2810<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1XHD80mcmF7CHFyToQC4tucrPRW53Ejw"></a><a class="font-bold" href="https://rabitabank.com/" target="_blank">Rabitə Bank</a></td><td class="font-size-large" data-cource="0.0184">0.0184<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0195">0.0195<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.181">2.181<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.258">2.258<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1rcCXlM84szzcqtPt2qaHo5aX3rw"></a><a class="font-bold" href="https://turanbank.az/" target="_blank">TuranBank</a></td><td class="font-size-large" data-cource="0.0150">0.0150<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0189">0.0189<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.2150">2.2150<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2390">2.2390<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1MLUu_zBChe6yLpJ4elnujjtv3uQ"></a><a class="font-bold" href="http://www.unibank.az/" target="_blank">Unibank</a></td><td class="font-size-large" data-cource="0.0166">0.0166<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0194">0.0194<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="2.1965">2.1965<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="2.2543">2.2543<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=16glsi6aXSSEd501V7xmq7-TqJBM"></a><a class="font-bold" href="https://www.yapikredi.com.az/" target="_blank">Yapı Kredi Bank Azərbaycan</a></td><td class="font-size-large" data-cource="0.0160">0.0160<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.0216">0.0216<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">rub</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td class="font-size-large" data-cource="0.00">0.00<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">gbp</span></td><td></td></tr></tbody>
 			</table>
 		</div>
 	</div>
-
-	<script src="js/cash.js"></script>
+	<div id="tab3" class="tabcontent" style="display: none;">
+		<div class="currency-table">
+			<table class="currency-table__table">
+				<thead>
+					<tr>
+						<td class="currency-table__main-currency-col currency-table__title-first font-bold">Valyuta</td>
+						<td class="currency-table__darken-bg currency-table__title-first font-bold">Mərkəzi Bankın məzənnəsi</td>
+						<td class="currency-table__title-first font-bold" colspan="2">Ən sərfəli məzənnə</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="currency-table__darken-bg"></td>
+						<td class="currency-table__title-second" style="width: 30%;">Alış</td>
+						<td class="currency-table__title-second" style="width: 30%;">Satış</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="currency-table__bordered-row">
+						<td class="currency-table__currency-name">TRY</td>
+						<td class="currency-table__rate currency-table__darken-bg" data-cource-cbar="try">
+							<a href="http://www.cbar.az/" class="currency-table__link" target="_blank">
+								<div class="currency-table__rate__num">0.0649</div>
+							</a>
+						</td>
+						<td class="currency-table__rate" data-cource-buy="try"><div class="currency-table__rate__num">0.0550</div><a href="https://turanbank.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">TuranBank</div></a></td>
+						<td class="currency-table__rate" data-cource-sell="try"><div class="currency-table__rate__num">0.0740</div><a href="https://turanbank.az/" class="currency-table__link" target="_blank"><div class="currency-table__rate__text">TuranBank</div></a></td>
+					</tr>	                 
+				</tbody>
+			</table>
+		</div>
+		<div class="list-banks">
+			<table class="standard-table top-banks">
+				<thead>
+					<tr>
+						<th rowspan="2" style="width: 5%;">
+							<span class="th-sortable__text th-sortable__text--double-height">№</span>
+						</th>
+						<th class="th-sortable" rowspan="2" style="width: 25%;">
+							<span class="th-sortable__text th-sortable__text--double-height">Bank</span>
+						</th>
+						<th class="colspan font-size-medium font-bold" style="width: 30%;" colspan="2">
+							TRY
+						</th>
+						<th rowspan="2" style="width: 10px; padding: 0;"></th>
+						<th style="width: 30%;" colspan="2"></th>
+						<th rowspan="2" style="width: 10%;">Yeniləmə vaxtı</th>
+					</tr>
+				</thead>
+			</table>    
+			<table class="standard-table standard-table--row-highlight banks" id="banks-3">
+				<thead>
+					<tr>
+						<th class="th-sortable" data-sort="string" style="width: 25%"></th>
+						<th class="th-sortable" data-sort="float" style="width: 15%">
+							<span class="th-sortable__text">Alış</span>
+						</th>
+						<th class="th-sortable" data-sort="float" style="width: 15%">
+							<span class="th-sortable__text">Satış</span>
+						</th>
+						<th style="width: 30%"></th>
+						<th style="width: 10%">2023-07-17 19:00:37</th>
+					</tr>
+				</thead>
+				<tbody><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1acvwbGj9eCqRadLhb9g-aSKSVI4"></a><a class="font-bold" href="http://www.premiumbank.az/" target="_blank">Premium Bank</a></td><td class="font-size-large" data-cource="0.05">0.05<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">try</span></td><td class="font-size-large" data-cource="0.082">0.082<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">try</span></td><td style="width: 30%"></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1O2J3bz1EriNQfHxaUbCJ9xXs4YY"></a><a class="font-bold" href="https://kapitalbank.az/" target="_blank">Kapital Bank</a></td><td class="font-size-large" data-cource="0.0467">0.0467<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">try</span></td><td class="font-size-large" data-cource="0.0767">0.0767<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">try</span></td><td style="width: 30%"></td><td></td></tr><tr class="calculator__container exchange-calculator-rates"><td><a class="gmaps" href="https://www.azn.az/#" data-link="https://www.google.com/maps/d/embed?mid=1rcCXlM84szzcqtPt2qaHo5aX3rw"></a><a class="font-bold" href="https://turanbank.az/" target="_blank">TuranBank</a></td><td class="font-size-large" data-cource="0.0550">0.0550<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">try</span></td><td class="font-size-large" data-cource="0.0740">0.0740<i class="icon-font icon-calculator calculator" style="visibility: hidden;"></i><span class="currency_code">try</span></td><td style="width: 30%"></td><td></td></tr></tbody>
+			</table>
+		</div>
+	</div>
+	<script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/cash.js"></script>
 </main>
 
-  
-    <script src="js/lib/jquery.magnific-popup.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/jquery.magnific-popup.min.js"></script>
+    <script src="./Azərbaycanda banklarda bu günə olan valyuta məzənnələri (Nağd)_files/main.js"></script>
     
 
 
